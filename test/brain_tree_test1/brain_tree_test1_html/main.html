@@ -1,0 +1,139 @@
+<!---うまくいかなかったので、とりあえずは記録機能排除--->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>BRAIN TREE</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../brain_tree_test1_css/brain_tree_test1.css">
+        <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+            integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    </head>
+    
+    <body>
+        <div>
+            <div id="canvas-wapper" style="position:relative; overflow:hidden; background-color:silver; padding:0rem;">
+                <div id="canvas-area" style="position:absolute;">
+                    <canvas id="main-canvas" style="vertical-align: bottom; position:absolute"></canvas>
+                    <canvas id="draw-canvas" style="vertical-align: bottom; position:absolute"></canvas>
+                </div>  
+                <div id="canvas-container" class="" style="position:absolute"></div>  
+            </div>
+
+            <div id="control-window">
+                <div class="no-copy border rounded shadow absolute" style="position:fixed; z-index: 100;top:20px;left:800px;background-color: white;">
+                    <div id="main" class="can-move rounded-top" style="height:30px;background-color: red;">
+                        
+                    </div>
+                    <div style="padding:0 10px 10px 10px;">
+                        <div style="margin-top:10px;">
+                            <button id="new-folder-btn" class="rounded-pill btn">新しいフォルダを作成</button>
+                        </div>
+                        <div style="margin-top:10px;padding-top:5px;padding-bottom:5px; border-top: 1px black solid;border-bottom: 1px black solid;">
+                            <div class="form-check">
+                                <label class="form-check-label"></label>
+                                <input class="form-check-input" type="radio" name="mode" value="1" checked>
+                                描画
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label"></label>
+                                <input class="form-check-input" type="radio" name="mode" value="2">
+                                画像関連
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label"></label>
+                                <input class="form-check-input" type="radio" name="mode" value="3">
+                                テキスト
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <input id="inputColor" type="color" value="#ff0000">
+                            <!--button id="btn-save" class="btn">保存</button--->
+                            <!--button id="btn-reset"class="btn">リセット</button--->
+                        </div>
+                    </div>
+                </div>
+                
+                <!---draw関連---->
+                <div id="draw-info" class="rounded no-copy shadow absolute" style="background-color: white;position:fixed; z-index:100; top:300px;left:800px">
+                    <div id="draw" class="can-move rounded-top" style="height:30px;background-color: aqua;">
+                        
+                    </div>
+                    <div style="padding:0 10px 10px 10px;">
+                        <div style="margin-top:10px;">
+                            <div class="form-check">
+                                <label class="form-check-label"></label>
+                                <input class="form-check-input" type="radio" name="draw-type" value="1" checked>
+                                描く
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label"></label>
+                                <input class="form-check-input" type="radio" name="draw-type" value="2">
+                                消しゴム
+                            </div>
+                        </div>
+                        
+                        <div class="slider" style="margin-top:10px;padding-top:5px;padding-bottom:5px; border-top: 1px black solid;border-bottom: 1px black solid;">
+                            <div>ペンのサイズ</div>
+                            <span>縮小</span>
+                            <input id="zoom-slider-draw" type="range">
+                            <span>拡大</span>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <button id="clear-btn-draw"class="btn">描画をクリア</button>
+                        </div>
+                    </div>
+                </div>
+                <!---image関連--->
+                <div id="image-info" class="rounded no-copy shadow absolute" style="background-color: white;position:fixed; z-index: 100;top:300px;left:800px;">
+                    <div id="image" class="can-move rounded-top" style="height:30px;background-color: lawngreen;">
+                        
+                    </div>
+                    <div style="padding:0 10px 10px 10px;" >
+                        <div style="margin-top:10px;">
+                            <label class="rounded-pill btn" style="cursor: pointer; padding:5px 7px;">
+                                <input type="file" id="uploadFile" style="display:none">画像を選択
+                            </label>
+                        </div>
+                        <!--p><small>画像をドラッグアンドドロップで移動できる。</small></p>
+                        <p><small>画像上で右クリックで、サイズ変更、削除が出来る。</small></p-->
+                        <div class="slider" style="margin-top:10px;padding-top:5px;padding-bottom:5px; border-top: 1px black solid;border-bottom: 1px black solid;">
+                            <span>縮小</span>
+                            <input id="zoom-slider-img" type="range">
+                            <span>拡大</span>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <button id="clear-button-image"class="btn">画像を削除</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!---text関連--->
+                <div id="text-info" class="rounded no-copy shadow absolute" style="background-color: white;position:fixed; z-index: 100;top:300px;left:800px">
+                    <div id="text" class="can-move rounded-top" style="height:30px;background-color: yellow;">
+                        
+                    </div>
+                    <div style="padding:0 10px 10px 10px;">
+                        <div style="margin-top:10px;">
+                            <textarea id="word" type="text"></textarea>
+                            <button id="send-btn" class="rounded-pill btn">送信</button>
+                        </div>
+                        <div class="slider" style="margin-top:10px;padding-top:5px;padding-bottom:5px; border-top: 1px black solid;border-bottom: 1px black solid;">
+                            <span>縮小</span>
+                            <input id="zoom-slider-text" type="range">
+                            <span>拡大</span>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <button id="clear-button-text"class="btn">テキストを削除</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    <script src="../brain_tree_test1_js/main.js"></script>
+    <script src="../brain_tree_test1_js/draw_image_text.js"></script>
+    <script src="../brain_tree_test1_js/createFolder.js"></script>
+</html>

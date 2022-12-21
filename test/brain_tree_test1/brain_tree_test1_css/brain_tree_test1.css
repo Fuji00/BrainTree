@@ -1,0 +1,77 @@
+
+
+
+/*////////////////////////////////////////////////////////////////////////*/
+.no-push>div>input{/*folder用*/
+    /*
+    pointer-events:none;
+    opacity: 0.5;*/
+}
+/*選択されていないCanvasの画像とテキストを触れないようにした*/
+.no-push>p{
+   /*
+    pointer-events:none;
+    opacity: 0.5;
+    */
+}
+.no-push{
+    pointer-events:none;
+   /* opacity: 0.5;*/
+}
+/*
+.p>div>:last-child>:first-child{canvasのheader用
+    background-color: blueviolet;
+    pointer-events:auto;
+    opacity: 1;
+}*/
+.n>div>:last-child>:first-child{/*canvasのheader用*/
+    background-color: red;
+    pointer-events:none;
+    opacity: 0.5;
+}
+.z-position{
+    z-index: 1;
+}
+.selected-canvas{
+    background-color: peachpuff;
+    /*border:5px solid black;*/
+}
+.remove-canvas{
+    background-color: skyblue;
+}
+
+.shadow {
+    box-shadow: 0 100px 250px 0 rgba(0, 0, 0, 1);
+}
+.absolute{
+    position:absolute;
+    /*width:100%;*/
+}
+
+.no-copy{
+    user-select: none;
+}
+
+
+.can-move{
+    background-color: brown;
+}
+.btn:hover{
+    background-color: silver;
+}
+.btn{
+    background-color: #EEEEEE;
+    border:1px black solid;
+}
+
+.pointer-on{
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.img-not{
+    background-image:url(../images/not.png);             /* 画像のURLを指定       */
+    background-repeat:  no-repeat;                /* 画像の繰り返しを指定  */              
+    width:auto;                                   /* 横幅のサイズを指定    */
+    height:auto;
+}
