@@ -50,9 +50,10 @@ window.addEventListener('load',function(){
     //text
     textWord=document.querySelector('#word').addEventListener("change",function(event){
         writeText=event.target.value;
-        let btn_text=document.querySelector('#send-btn').addEventListener('click',function(){
-            makeText(writeText);
-        });
+    });
+    let btn_text=document.querySelector('#send-btn').addEventListener('click',function(){
+        makeText(writeText);
+        
     });
 });
 
@@ -213,17 +214,18 @@ function clearImage(event){
 function makeText(writeText){
     textCallCount++
     paintColor=document.querySelector("#inputColor").value;//
-    let makeText=document.createElement('p');
+    let makeText=document.createElement('div');
     makeText.innerHTML=writeText;
     makeText.classList.add('absolute');
     makeText.classList.add('shadow');
     makeText.style.zIndex=2
+    makeText.style.whiteSpace="nowrap";
     makeText.style.color=paintColor;
     makeText.data=textCallCount;
     dispText[textCallCount]=makeText;
     selectedDiv.appendChild(dispText[textCallCount]);
 
-    imageTextInObject("text",writeText,dispText[textCallCount],textCallCount);//brain_treeにimage情報を入れる
+    //imageTextInObject("text",writeText,dispText[textCallCount],textCallCount);//brain_treeにimage情報を入れる
 
     dispText[textCallCount].addEventListener('mousedown',function(event){
         targetObject=event.target;//拡大縮小のためにオブジェクトを入れる、削除時の添え字としても使う
