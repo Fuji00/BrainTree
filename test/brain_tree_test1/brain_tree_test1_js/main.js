@@ -81,6 +81,9 @@ window.addEventListener('resize',function(){//windowサイズが変更される�
 });
 
 window.addEventListener('load',function(){
+    //modal
+    $('.show').modaal();
+
     canvas_wapper=document.querySelector('#canvas-wapper');
     canvas_wapper.style.zIndex=1;
     canvas_area=document.querySelector('#canvas-area');

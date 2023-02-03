@@ -5,13 +5,60 @@
         <meta charset="UTF-8">
         <title>BRAIN TREE</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <!--link rel="stylesheet" href="../brain_tree_test1_css/brain_tree_test1.css"-->
-        <link rel="stylesheet" href="https://bt.mpf23.com/BrainTree/brain_tree_test1/brain_tree_test1_css/brain_tree_test1.css">
+        <link rel="stylesheet" href="../brain_tree_test1_css/brain_tree_test1.css"><!---local-->
+        <!--link rel="stylesheet" href="https://bt.mpf23.com/BrainTree/brain_tree_test1/brain_tree_test1_css/brain_tree_test1.css"--><!--global-->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/css/modaal.min.css"/>
         <script src="https://code.jquery.com/jquery-3.5.0.min.js"
             integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/js/modaal.min.js" integrity="sha256-e8kfivdhut3LQd71YXKqOdkWAG1JKiOs2hqYJTe0uTk=" crossorigin="anonymous"></script>
+
     </head>
     
     <body>
+        <div id="modal"><!---modal-->
+            <h3>使い方</h3>
+            <h4>メインパレット</h4>
+            <p>
+                [新しいフォルダを作成]を選択するとキャンバスにフォルダが表示され、[開く]を選択すると子キャンバスが表示されます。
+                子キャンバスをクリックし、選択状態にすると描画などが出来るようになります。<br>
+                その状態で、[新しいフォルダを作成]を選択すると子キャンバスの中に子キャンバスが作成出来ます。
+            </p>
+            <p>[描画]を選択すると線を描くことが出来ます。サブパレット[描画]が表示されます。</p>
+            <p>[画像]を選択すると画像を貼り付ける事が出来ます。サブパレット[画像]が表示されます。</p>
+            <p>[テキスト]を選択するとテキストを貼り付ける事が出来ます。サブパレット[テキスト]が表示されます。</p>
+            <h4>サブパレット</h4>
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <h5>描画</h5>
+                        <p>
+                            [消しゴム]を選択すると絵を消すことが出来ます。<br>
+                            ペンの太さも変えることが出来ます。<br>
+                            描画を削除を選択すると現在選択中のキャンバスの描画を削除します。
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <h5>画像</h5>
+                        <p>
+                            「画像を選択」を選択し、任意の画像を選び、貼り付ける事が出来ます。<br>
+                            表示した画像をクリックすると、サブパレットから、サイズを変えたり、削除も出来ます。<br>
+                            表示した画像をドラッグで移動させる事も出来ます。
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <h5>テキスト</h5>
+                        <p>
+                            テキストエリア内に文字を打ち込み、送信を選択すると、現在選択中のキャンバスにテキストが表示されます<br>
+                            表示したテキストをクリックすると、サブパレットから、サイズを変えたり、削除も出来ます。<br>
+                            表示したテキストをドラッグで移動させる事も出来ます。
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+            <h3>(注)保存機能はまだありません。</h3>
+        </div>
+        
         <div>
             <div id="canvas-wapper" style="position:relative; overflow:hidden; background-color:silver; padding:0rem;">
                 <div id="canvas-area" style="position:absolute;">
@@ -39,7 +86,7 @@
                             <div class="form-check">
                                 <label class="form-check-label"></label>
                                 <input class="form-check-input" type="radio" name="mode" value="2">
-                                画像関連
+                                画像
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label"></label>
@@ -47,10 +94,15 @@
                                 テキスト
                             </div>
                         </div>
-                        <div style="margin-top: 10px;">
-                            <input id="inputColor" type="color" value="#ff0000">
-                            <!--button id="btn-save" class="btn">保存</button--->
-                            <!--button id="btn-reset"class="btn">リセット</button--->
+                        <div class="container" style="margin-top: 10px;">
+                            <div class="row">
+                                 <a class="col-5 btn show" href="#modal" role="button">使い方</a>
+                                <input class="offset-2 col-5" id="inputColor" type="color" value="#ff0000" style="height:36px">
+                                <!--button id="btn-save" class="btn">保存</button--->
+                                <!--button id="btn-reset"class="btn">リセット</button--->
+                            </div>
+                           
+                            
                         </div>
                     </div>
                 </div>
@@ -132,11 +184,12 @@
             </div>
         </div>
     </body>
-
-    <!--script src="../brain_tree_test1_js/main.js"></script>
+<!---local-->
+    <script src="../brain_tree_test1_js/main.js"></script>
     <script src="../brain_tree_test1_js/draw_image_text.js"></script>
-    <script src="../brain_tree_test1_js/createFolder.js"></script-->
-    <script src="https://bt.mpf23.com/BrainTree/brain_tree_test1/brain_tree_test1_js/main.js"></script>
+    <script src="../brain_tree_test1_js/createFolder.js"></script>
+<!---global-->
+    <!--script src="https://bt.mpf23.com/BrainTree/brain_tree_test1/brain_tree_test1_js/main.js"></script>
     <script src="https://bt.mpf23.com/BrainTree/brain_tree_test1/brain_tree_test1_js/draw_image_text.js"></script>
-    <script src="https://bt.mpf23.com/BrainTree/brain_tree_test1/brain_tree_test1_js/createFolder.js"></script>
+    <script src="https://bt.mpf23.com/BrainTree/brain_tree_test1/brain_tree_test1_js/createFolder.js"></script-->
 </html>

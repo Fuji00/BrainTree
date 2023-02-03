@@ -1,29 +1,13 @@
 
 
+#modal{
+    display: none;
+}
 
-/*////////////////////////////////////////////////////////////////////////*/
-.no-push>div>input{/*folder用*/
-    /*
-    pointer-events:none;
-    opacity: 0.5;*/
-}
-/*選択されていないCanvasの画像とテキストを触れないようにした*/
-.no-push>p{
-   /*
-    pointer-events:none;
-    opacity: 0.5;
-    */
-}
 .no-push{
     pointer-events:none;
-   /* opacity: 0.5;*/
 }
-/*
-.p>div>:last-child>:first-child{canvasのheader用
-    background-color: blueviolet;
-    pointer-events:auto;
-    opacity: 1;
-}*/
+
 .n>div>:last-child>:first-child{/*canvasのheader用*/
     background-color: red;
     pointer-events:none;
