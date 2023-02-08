@@ -59,3 +59,8 @@
     width:auto;                                   /* 横幅のサイズを指定    */
     height:auto;
 }
+
+.palette-img-size{
+    width:200px;
+    height:200px;
+}
