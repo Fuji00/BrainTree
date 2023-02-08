@@ -11,7 +11,7 @@ let canvas_container;//この変数内に子キャンバスを入れていく
 let instance_count=0;
 
 let folder=[];//div要素
-let folder_img="https://bt.mpf23.com/BrainTree/brain_tree_test1/images/folder2.png";//"../images/folder2.png";
+let folder_img="../images/folder2.png";//"https://bt.mpf23.com/BrainTree/brain_tree_test1/images/folder2.png";//"../images/folder2.png";
 let move_flg=false;
 
 let selectedCanvas={
