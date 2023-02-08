@@ -26,7 +26,7 @@ window.addEventListener('load',function(){
     });
     //selectedCanvas.drawの内容を削除
     let clearBtn=document.querySelector('#clear-btn-draw').addEventListener('click',function(){
-        clearDraw(drawCtx);
+        clearDraw(selectedctx.draw);
     });
     //image
     upFile.addEventListener("change",function(event){
@@ -144,8 +144,10 @@ function changeScaleDraw(event){
 }
 function clearDraw(drawCtx){
     let res_delete=confirm("現在選択中のキャンバスの描画を削除します。よろしいですか？");
+    
     if(res_delete){
-        drawCtx.clearRect(0,0,selectedCanvas.draw.getBoundingClientRect().width ,selectedCanvas.draw.getBoundingClientRect().height );
+        console.log(drawCtx);
+        drawCtx.clearRect(0,0,selectedCanvas.draw.getBoundingClientRect().width ,selectedCanvas.draw.getBoundingClientRect().height);
     }
 }
 ////////////////////////////////////////////////////image
