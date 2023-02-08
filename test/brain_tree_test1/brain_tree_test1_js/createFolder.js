@@ -46,7 +46,7 @@ function createFolder(){
         
         //禁止マーク
         let folder_prohibition_mark=document.createElement('img');//禁止マーク
-        folder_prohibition_mark.src="../images/ban2.png";//"https://bt.mpf23.com/BrainTree/brain_tree_test1/images/ban2.png";//"../images/ban2.png";
+        folder_prohibition_mark.src="https://bt.mpf23.com/BrainTree/brain_tree_test1/images/ban2.png";//"../images/ban2.png";
         folder_prohibition_mark.style.zIndex=2;
         folder_prohibition_mark.style.top=40+"px";
         folder_prohibition_mark.style.left=25+"px";
@@ -120,7 +120,7 @@ function createFolder(){
         canvas_div.appendChild(header);
 
         let header_prohibition_mark=document.createElement('img');//禁止マーク
-        header_prohibition_mark.src="../images/ban2.png";//"https://bt.mpf23.com/BrainTree/brain_tree_test1/images/ban2.png";//../images/ban2.png";
+        header_prohibition_mark.src="https://bt.mpf23.com/BrainTree/brain_tree_test1/images/ban2.png";//../images/ban2.png";
         header_prohibition_mark.style.display="none";
         header.appendChild(header_prohibition_mark);
 
