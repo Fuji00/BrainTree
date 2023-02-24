@@ -1,53 +1,36 @@
-let create_folder//btn
+let create_folder       //btn
 
-let canvas_wapper;//main_canvasの親の親
-let canvas_area;//main_canvasの親
-let touch_canvas;
-let draw_canvas;
-let drawCtx;
+let canvas_wapper;      //main_canvasの親の親
+let canvas_area;        //main_canvasの親
+let canvas_container;   //この変数内に子キャンバスを入れていく
 
-let canvas_container;//この変数内に子キャンバスを入れていく
+let instance_count=0;   //folder作成を呼び出した回数
 
-let instance_count=0;
 
-let folder=[];//div要素
-let folder_img="../images/folder2.png";//"https://bt.mpf23.com/BrainTree/brain_tree_test1/images/folder2.png";//"../images/folder2.png";
-let move_flg=false;
-
+//選択されたCanvas、子要素を入れる用のdiv要素、ctxを入れる
 let selectedCanvas={
-    touch:null,//クリック検知
-    draw:null,//描く
+    touch:null,         //クリック検知
+    draw:null,          //描く
 };
-let selectedDiv;//この変数内に子キャンバスの子を入れていく
-let selectedctx={//選択されたdrawCanvasのctxをいれる
+let selectedDiv;        //この変数内に子キャンバスの子を入れていく
+let selectedctx={       //選択されたdrawCanvasのctxをいれる
     draw:null,
 }
-
-
-let cTop=0;//canvasの座標を入れる
-let cLeft=0;
-let canW=0;
-let canH=0;
+let selectedObject;     //選択されたobjectを入れる   まだいらない
 
 let inChildFlg=false;
-
-let targetFolderNum=0;//選択したフォルダの数字を入れる
 let mode="1";
-let canvasSizeMax={//キャンバスのサイズの最高、windowサイズにする
-    width:0,
-    height:0,
-}
 
-
-
+//folder,image,text,panel　の移動時に使用する
 let moveObj;
-
+let move_flg=false;
 let mouseUpFlg=false;
 let whatMoves;
 
+//object
 let brain_tree={
     selectFlg:true,
-    folderCanvas:null,
+    canvasTouch:null,
     canvasDraw:null,
     canvasDrawCtx:null,
     canvasDrawData:null,
@@ -55,7 +38,7 @@ let brain_tree={
     text:{},
     child:{}
 }
-let selectedObject;//選択されたobjectを入れる
+
 console.log("main");
 //リサイズ
 function reSize(){
@@ -67,14 +50,11 @@ function reSize(){
     canvas_area.style.height=window.innerHeight+"px";
     //canvas
     
-    touch_canvas.width=window.innerWidth;
-    touch_canvas.height=window.innerHeight;
-    draw_canvas.width=window.innerWidth;
-    draw_canvas.height=window.innerHeight;
+    brain_tree.canvasTouch.width=window.innerWidth;
+    brain_tree.canvasTouch.height=window.innerHeight;
+    brain_tree.canvasDraw.width=window.innerWidth;
+    brain_tree.canvasDraw.height=window.innerHeight;
     
-    //maxを入れる
-    canvasSizeMax.width=window.innerWidth;
-    canvasSizeMax.height=window.innerHeight;
 }
 window.addEventListener('resize',function(){//windowサイズが変更されるたびに呼ばれる
     reSize();
@@ -88,13 +68,13 @@ window.addEventListener('load',function(){
     canvas_wapper.style.zIndex=1;
     canvas_area=document.querySelector('#canvas-area');
     //canvas群
-    touch_canvas=document.querySelector('#main-canvas');
-    touch_canvas.data=instance_count;
-    draw_canvas=document.querySelector('#draw-canvas');
-    draw_canvas.data=instance_count;
+    brain_tree.canvasTouch=document.querySelector('#main-canvas');
+    brain_tree.canvasTouch.data=instance_count;
+    brain_tree.canvasDraw=document.querySelector('#draw-canvas');
+    brain_tree.canvasDraw.data=instance_count;
 
     //ctx
-    drawCtx=draw_canvas.getContext('2d');
+    brain_tree.canvasDrawCtx=brain_tree.canvasDraw.getContext('2d');
     
     //この中に子要素を入れていく
     canvas_container=document.querySelector('#canvas-container');
@@ -107,22 +87,16 @@ window.addEventListener('load',function(){
 
     //現在選択中のCanvasを入れる。　（最初に変数selectedCanvasに Canvas群を入れておく） 
     //selectedDivに子要素を入れていくためのcanvas_containerも入れる。
-    selectedCanvas.touch=touch_canvas;
+    selectedCanvas.touch=brain_tree.canvasTouch;
     selectedCanvas.touch.parentElement.classList.add('selected-canvas');
-    selectedCanvas.draw=draw_canvas;
+    selectedCanvas.draw=brain_tree.canvasDraw;
     selectedDiv=canvas_container;
-    selectedctx.draw=drawCtx;
+    selectedctx.draw=brain_tree.canvasDrawCtx;
 
-    //objectにも入れておく
-    brain_tree.folderCanvas=touch_canvas;
-    brain_tree.canvasDraw=draw_canvas;
    
-    brain_tree.canvasDrawCtx=drawCtx;
-  
-
 //////
     //モード切り替え（描画　画像　テキスト）
-    modeChanger(touch_canvas,draw_canvas,);//最初に呼び出しておく　最初は書けるようにしておく
+    modeChanger(brain_tree.canvasTouch,brain_tree.canvasDraw);//最初に呼び出しておく　最初は書けるようにしておく
     drawSetting();//最初に呼び出しておく　書けるようにしておく
     //モードによって処理分岐
     $('[name="mode"]').on("change",function(event){
@@ -154,7 +128,7 @@ window.addEventListener('load',function(){
 /////
     //親キャンバスが押されたら （子キャンバスを選択後メインキャンバスを押したら呼ばれる）
     canvas_area.addEventListener('click',function(){//マウスポインタの位置取得
-        canvasOverlapChanger(touch_canvas,draw_canvas);
+        canvasOverlapChanger(brain_tree.canvasTouch,brain_tree.canvasDraw);
         inChildFlg=false;
 
         selectedDiv=canvas_container;   

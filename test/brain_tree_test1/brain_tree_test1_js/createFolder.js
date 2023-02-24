@@ -1,3 +1,7 @@
+let folder=[];//div要素
+let folder_img="../images/folder2.png";//"https://bt.mpf23.com/BrainTree/brain_tree_test1/images/folder2.png";//"../images/folder2.png";
+let targetFolderNum=0;//選択したフォルダの数字を入れる
+
 function createFolder(){
     instance_count++;
     //div                                    div img canvasを作る
@@ -6,7 +10,7 @@ function createFolder(){
         folder[instance_count].classList.add('absolute');
         folder[instance_count].classList.add('no-copy');
     //ここでifをして、どのキャンバスが選択されているかを判別してそのキャンバスが所属しているdiv要素の子（appendChild）にする 
-        if(selectedCanvas.touch==touch_canvas){
+        if(selectedCanvas.touch==brain_tree.canvasTouch){
             //1個目の要素
             canvas_container.appendChild(folder[instance_count]);
             console.log(canvas_container);
@@ -199,16 +203,16 @@ function createFolder(){
         //body in div このbgを変える
         let body_in_div=document.createElement('div');
         body_in_div.id="body-in-div"+instance_count;
-        body_in_div.style.width=canvasSizeMax.width+"px";
-        body_in_div.style.height=canvasSizeMax.height+"px";
+        body_in_div.style.width=window.innerWidth+"px";
+        body_in_div.style.height=window.innerHeight+"px";
         body_in_div.classList.add('absolute');
         body_in_div.style.zIndex=1;    
         body.appendChild(body_in_div);
 
         //canvas draw
         let canvasDraw=document.createElement('canvas');
-        canvasDraw.width=canvasSizeMax.width;
-        canvasDraw.height=canvasSizeMax.height;
+        canvasDraw.width=window.innerWidth;
+        canvasDraw.height=window.innerHeight;
         canvasDraw.id="draw-canvas"+instance_count;
         canvasDraw.data=instance_count;
         canvasDraw.classList.add('absolute');
@@ -216,8 +220,8 @@ function createFolder(){
 
         //canvas タッチ用
         let canvas=document.createElement('canvas');
-        canvas.width=canvasSizeMax.width;
-        canvas.height=canvasSizeMax.height;
+        canvas.width=window.innerWidth;
+        canvas.height=window.innerHeight;
         canvas.id="canvas"+instance_count;
         canvas.data=instance_count;
         canvas.data_title="タイトル"+instance_count;
@@ -436,7 +440,7 @@ function createFolder(){
     return folder[instance_count];    
 }
 
-function selectCanvas(object){//キャンバスが選択されたときの処理 objectの中身(selectedCanvas.main)
+function selectCanvas(object){//キャンバスが選択されたときの処理 objectの中身(selectedCanvas.touch)
     //mainCanvas
     if(object.data==0){
         //親要素であるmainCanvasを選択状態(true)にする
