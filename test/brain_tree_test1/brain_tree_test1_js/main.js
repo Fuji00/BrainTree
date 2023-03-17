@@ -18,7 +18,7 @@ let selectedctx={       //選択されたdrawCanvasのctxをいれる
 }
 let selectedObject;     //選択されたobjectを入れる   まだいらない
 
-let inChildFlg=false;
+let inChildFlg=false;   //子キャンバス内にフォルダを表示させるかどうか判別
 let mode="1";
 
 //folder,image,text,panel　の移動時に使用する
@@ -49,7 +49,6 @@ function reSize(){
     canvas_area.style.width=window.innerWidth+"px";
     canvas_area.style.height=window.innerHeight+"px";
     //canvas
-    
     brain_tree.canvasTouch.width=window.innerWidth;
     brain_tree.canvasTouch.height=window.innerHeight;
     brain_tree.canvasDraw.width=window.innerWidth;
@@ -96,8 +95,8 @@ window.addEventListener('load',function(){
    
 //////
     //モード切り替え（描画　画像　テキスト）
-    modeChanger(brain_tree.canvasTouch,brain_tree.canvasDraw);//最初に呼び出しておく　最初は書けるようにしておく
-    drawSetting();//最初に呼び出しておく　書けるようにしておく
+    modeChanger(selectedCanvas.touch,selectedCanvas.draw);      //最初に呼び出しておく　最初は書けるようにしておく
+    drawSetting();                                              //最初に呼び出しておく　最初は書けるようにしておく
     //モードによって処理分岐
     $('[name="mode"]').on("change",function(event){
         mode=$('input[name="mode"]:checked').val();
@@ -127,7 +126,7 @@ window.addEventListener('load',function(){
     //let btn_save=document.querySelector("#btn-save").addEventListener('click',saveAll);
 /////
     //親キャンバスが押されたら （子キャンバスを選択後メインキャンバスを押したら呼ばれる）
-    canvas_area.addEventListener('click',function(){//マウスポインタの位置取得
+    canvas_area.addEventListener('click',function(){
         canvasOverlapChanger(brain_tree.canvasTouch,brain_tree.canvasDraw);
         inChildFlg=false;
 
@@ -150,20 +149,13 @@ window.addEventListener('load',function(){
             upAll(event,whatMoves,"null");
         });
     }
-
-    document.addEventListener('click',function(e){
-        console.log(e.target);
-    });
 });//onload end
 
 
 
 //関数
 function pushAll(event){
-    console.log(pushAll.caller);
-    moveObj=null;
     moveObj=event.target;
-    console.log(event.target);
     move_flg=true;
     mouseUpFlg=false;
    
@@ -191,7 +183,6 @@ function moveAll(event){
             moveObj.parentNode.style.left=event.clientX-50+"px";
             moveObj.parentNode.style.top=event.clientY-60+"px";
         }
-        
     }else if(whatMoves=="canvas"){
         if(inChildFlg==true){//子
             console.log("child");
@@ -227,56 +218,42 @@ function upAll(event,whatMoves,panel){
     if(!move_flg){return;}
     mouseUpFlg=true;
     move_flg=false;
-    
-    if(whatMoves=="window"){
-       
-    }else if(whatMoves=="folder"){
+    console.log(whatMoves);
+    if(whatMoves=="folder"){
         panel.style.display="block";
         panel.style.top=80+"px";
-    }else if(whatMoves=="canvas"){
-       
-    }   
-
-
-    
-    event.stopImmediatePropagation();//これでdocument.addEventListener('mousemove'が呼ばれるのを止める
+    }
+    event.stopImmediatePropagation();       //これでdocument.addEventListener('mousemove'が呼ばれるのを止める
 }
 
-function modeChanger(touchC,drawC){//モードパネルの内容次第で重なり順を変える
+function modeChanger(touchC,drawC){         //モードパネルの内容次第で重なり順を変える
     let touch=touchC;
     let draw=drawC;
   
-
     //パネル    最初は消しとく　
     $("#text-info").hide();
     $("#image-info").hide();
 
     if(mode=="1"){
         console.log("描画モード");
-        //drawCanvasを一番上にする(z-index)
         draw.classList.add("z-position");
         touch.classList.remove("z-position");
-        //
         $('#draw-info').show();
         $("#text-info").hide();
         $("#image-info").hide();
 
     }else if(mode=="2"){
         console.log("画像モード");
-        //imageCanvasを一番上にする(z-index)
         draw.classList.remove("z-position");
         touch.classList.remove("z-position");
-        //
         $("#image-info").show();
         $("#text-info").hide();
         $('#draw-info').hide();
 
     }else if(mode=="3"){
         console.log("テキストモード");
-        //textCanvasを一番上にする(z-index)
         draw.classList.remove("z-position");
         touch.classList.remove("z-position");
-        //
         $("#text-info").show();
         $('#draw-info').hide();
         $("#image-info").hide();
@@ -299,7 +276,7 @@ function canvasOverlapChanger(touchC,drawC){//Canvasの選択　切り替え
     //今のキャンバス
     selectedCanvas.touch.parentElement.classList.add('selected-canvas');
     selectedCanvas.touch.parentElement.classList.remove('remove-canvas');
-    modeChanger(touchC,drawC);
+    modeChanger(selectedCanvas.touch,selectedCanvas.draw);
     selectCanvas(selectedCanvas.touch);//object関連
     drawSetting();//描画セッティング
 }

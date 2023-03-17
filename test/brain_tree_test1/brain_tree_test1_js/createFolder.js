@@ -9,11 +9,11 @@ function createFolder(){
         folder[instance_count].id="folder"+instance_count;
         folder[instance_count].classList.add('absolute');
         folder[instance_count].classList.add('no-copy');
-    //ここでifをして、どのキャンバスが選択されているかを判別してそのキャンバスが所属しているdiv要素の子（appendChild）にする 
+
+        //どのキャンバスが選択されているかを判別してそのキャンバスが所属しているdiv要素の子（appendChild）にする 
         if(selectedCanvas.touch==brain_tree.canvasTouch){
-            //1個目の要素
+            //第Ⅰ階層の要素
             canvas_container.appendChild(folder[instance_count]);
-            console.log(canvas_container);
             inChildFlg=false;
         }else{
             //子要素
@@ -88,7 +88,6 @@ function createFolder(){
         let btn_open=document.createElement('button');
         btn_open.id="btn-open"+instance_count;
         btn_open.innerHTML="開く";
-        //btn_open.style.marginTop=
         panel.appendChild(btn_open);
 
         let btn_delete=document.createElement('button');
@@ -96,6 +95,8 @@ function createFolder(){
         btn_delete.innerHTML="削除";
         panel.appendChild(btn_delete);
 
+
+        
     //canvas div
         let canvas_div=document.createElement('div');
         canvas_div.id="canvas-area"+instance_count;
@@ -107,7 +108,6 @@ function createFolder(){
         canvas_div.style.display='none';
         folder[instance_count].appendChild(canvas_div);
         
-
         //header
         let header=document.createElement('div');
         header.id="canvas-header"+instance_count;
@@ -276,13 +276,13 @@ function createFolder(){
         });
         header.addEventListener('mouseup',function(event){
             upAll(event,"2",whatMoves,"null");
+
             //位置を記録　次回起動時復元する
             savePosition(event);
         });
 
         //パネルを消す処理
         document.addEventListener('click',(e)=>{
-            console.log("パネル消し");
             if(e.target.id!=folder_btn.id&&e.target.id!=panel.id&&e.target.id!=title.id
             &&e.target.id!=btn_decision.id&&e.target.id!=btn_open.id
             &&e.target.id!=btn_close.id&&e.target.id!=btn_delete.id){
@@ -302,6 +302,7 @@ function createFolder(){
             }else{
                 folder_title.innerHTML=title.value;
                 canvas.data_title=title.value;
+
                 //folderTitle復元用　objectに記録しておく
                 brain_tree.child["folderContainer"+btn_decision.data].folderTitleData=folder_title.innerHTML;
             }
@@ -327,8 +328,8 @@ function createFolder(){
 
         ///////////////////////////////canvas関連イベント
         //header
-        headerOperationDiv.addEventListener('mousedown',function(event){//コレを入れないと閉じるボタンが押されたらCanvasが移動する
-            event.stopPropagation();//これでdocument.addEventListener('mousemove'が呼ばれるのを止める
+        headerOperationDiv.addEventListener('mousedown',function(event){        //コレを入れないと閉じるボタンが押されたらCanvasが移動する
+            event.stopPropagation();                                            //これでdocument.addEventListener('mousemove'が呼ばれるのを止める
         });
 
         //パネルを押した状態で新規フォルダ作成ボタンを押したら子キャンバスにだけフォルダが表示される
